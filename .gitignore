@@ -1,0 +1,8 @@
+*.o
+*.beam
+*.ling
+*.la
+*.lo
+/.railing/
+domain_config
+ling.img
