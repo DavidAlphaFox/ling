@@ -126,7 +126,7 @@ do {									\
 
 /* This is a barrier for the compiler only, NOT the processor! */
 #define barrier() __asm__ __volatile__("": : :"memory")
-
+//进行内存总线锁定
 #if defined(__i386__)
 #define mb()    __asm__ __volatile__ ("lock; addl $0,0(%%esp)": : :"memory")
 #define rmb()   __asm__ __volatile__ ("lock; addl $0,0(%%esp)": : :"memory")

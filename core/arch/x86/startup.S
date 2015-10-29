@@ -33,6 +33,8 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*这个时候，Erlang的整个项目就是xen的一个guest*/
+	
 #include "xen/xen.h"
 
 #include "limits.h"
@@ -60,10 +62,10 @@
 	.globl	_start, hypercall_page
 	.globl	shared_info
 	.globl	grant_table
-	
+	/*将自己重新定位到0位置*/
 	.org	0x0000
 _start:
-
+/*调整堆栈，并启动ling虚拟机*/
 #if defined(__x86_64__)
 
 	cld

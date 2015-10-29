@@ -91,19 +91,22 @@ static void spawn_init_start(int8_t *cmd_line);
 
 // both domain and host name
 char my_domain_name[256];
-
+// 从汇编阶段，进入C语言的阶段，传承了Unix的典型思想
+// 汇编只负责引导和必要的硬件打交道的阶段
 void start_ling(start_info_t *si)
 {
 	//-------- init phase 1 --------
 	//
+	//start_info包含的是xen的初始化信息
+	//是xen在启动GuestOS的时候，放在特定的地方
 	memcpy(&start_info, si, sizeof(*si));
-
+    
 	phys_to_machine_mapping = (unsigned long *)start_info.mfn_list;
 
 	HYPERVISOR_update_va_mapping((unsigned long)&shared_info,
 		__pte(start_info.shared_info | 7), UVMF_INVLPG);
 	HYPERVISOR_shared_info = &shared_info;
-
+//进行时钟初始化
 	time_init();	// sets start_of_day_wall_clock
 
 	// use the time value to seed PRNG

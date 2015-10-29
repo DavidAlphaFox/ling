@@ -76,13 +76,14 @@ void time_init(void)		// UTC
 	wall_clock_base = (uint64_t)wc_sec * 1000000000ULL +wc_nsec;
 	start_of_day_wall_clock = wall_clock();
 }
-
+// 从xen中获取时间信息
 void get_time_values_from_xen(void)
 {
 	vcpu_time_info_t *vt = &shared_info.vcpu_info[0].time;
 
 	do {
 		shadow.version = vt->version;
+		//内存总线锁定下，为什么？
 		rmb();
 		shadow.tsc_timestamp = vt->tsc_timestamp;
 		shadow.system_time = vt->system_time;
